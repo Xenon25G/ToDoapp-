@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Tâches{% endblock %}
+
+{% block body %}
+    <div class="example-wrapper">
+        <h1>Liste des tâches 📝</h1>
+
+        {% if tasks is empty %}
+            <p>Aucune tâche pour le moment.</p>
+        {% else %}
+            <ul>
+                {% for task in tasks %}
+                    <li>
+                        <strong>{{ task.title }}</strong><br>
+                        {{ task.description|default('') }}<br>
+                        Statut : {{ task.status ? '✅ Terminé' : '❌ En cours' }}<br>
+                        Créée le : {{ task.createdAt ? task.createdAt|date('d/m/Y H:i') : 'N/A' }}<br>
+
+                        <a href="{{ path('app_task_show', {'id': task.id}) }}">🔍 Voir la tâche</a>
+                    </li>
+                    <hr>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <a href="{{ path('app_task_new') }}"> Créer une nouvelle task</a>
+    </div>
+{% endblock %}
